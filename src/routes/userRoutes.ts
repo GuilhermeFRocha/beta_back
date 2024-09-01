@@ -1,21 +1,26 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyRequest } from "fastify";
 import User from "../models/user";
 
-async function userRoutes(fastify: FastifyInstance) {
-  fastify.post("/users", async (request, reply) => {
-    const { username, password, email } = request.body as {
-      username: string;
-      password: string;
-      email: string;
-    };
+interface UserBody {
+  username: string;
+  password: string;
+  email: string;
+  role: string;
+}
 
-    try {
-      const newUser = await User.create({ username, password, email });
-      return reply.status(201).send(newUser);
-    } catch (error) {
-      return reply.status(500).send({ error: "Error creating user" });
+async function userRoutes(fastify: FastifyInstance) {
+  fastify.post(
+    "/users",
+    async (request: FastifyRequest<{ Body: UserBody }>, reply) => {
+      const { username, password, email, role } = request.body;
+      try {
+        const newUser = await User.create({ username, password, email, role });
+        return reply.status(201).send(newUser);
+      } catch (error) {
+        return reply.status(500).send({ error: "Error creating user" });
+      }
     }
-  });
+  );
 
   fastify.get("/users", async (request, reply) => {
     try {
