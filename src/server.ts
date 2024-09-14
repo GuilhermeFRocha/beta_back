@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 const sequelize = require("./config/database");
-import userRoutes from "./routes/userRoutes";
+import registerRoutes from "./routes/registerRoutes";
+import loginRoutes from "./routes/loginRoutes";
 import cors from "@fastify/cors";
 
 const fastify = Fastify({
@@ -15,7 +16,8 @@ fastify.register(cors, {
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-fastify.register(userRoutes);
+fastify.register(registerRoutes);
+fastify.register(loginRoutes);
 
 const start = async () => {
   try {
