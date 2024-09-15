@@ -27,8 +27,10 @@ export async function createRegisterHandler(
       role,
     });
 
+    const userDate = newUser.dataValues;
+
     const token = jwt.sign(
-      { id: newUser.id, email: newUser.email, role: newUser.role },
+      { id: userDate.id, email: userDate.email, role: userDate.role },
       process.env.JWT_SECRET_KEY || "your-secret-key",
       { expiresIn: "1h" }
     );

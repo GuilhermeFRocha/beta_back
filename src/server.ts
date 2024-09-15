@@ -2,7 +2,9 @@ import Fastify from "fastify";
 const sequelize = require("./config/database");
 import registerRoutes from "./routes/registerRoutes";
 import loginRoutes from "./routes/loginRoutes";
+import transactionRoutes from "./routes/transactionRoutes";
 import cors from "@fastify/cors";
+import usersRoutes from "./routes/usersRoutes";
 
 const fastify = Fastify({
   logger: {
@@ -18,6 +20,8 @@ fastify.register(cors, {
 
 fastify.register(registerRoutes);
 fastify.register(loginRoutes);
+fastify.register(transactionRoutes);
+fastify.register(usersRoutes);
 
 const start = async () => {
   try {

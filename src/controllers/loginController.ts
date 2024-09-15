@@ -21,16 +21,15 @@ export async function loginUserHandler(
       return reply.status(401).send({ error: "Invalid credentials" });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      user.dataValues.password
-    );
+    const userDate = user.dataValues;
+
+    const isPasswordValid = await bcrypt.compare(password, userDate.password);
 
     if (!isPasswordValid) {
       return reply.status(401).send({ error: "Invalid credentials" });
     }
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
+      { id: userDate.id, email: userDate.email, role: userDate.role },
       "your-secret-key",
       { expiresIn: "1h" }
     );
