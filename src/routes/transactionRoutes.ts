@@ -5,7 +5,7 @@ import {
 } from "../controllers/transactionController";
 
 async function transactionRoutes(fastify: FastifyInstance) {
-  fastify.post("/transaction", createTransactionHandler);
+  fastify.post("/transaction/:id", createTransactionHandler);
   fastify.get("/transaction/:id", getTransactionsHandler);
 }
 

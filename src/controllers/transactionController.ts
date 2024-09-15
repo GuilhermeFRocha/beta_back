@@ -1,11 +1,35 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import Transaction from "../models/transaction";
 
+interface RequestProps {
+  description: string;
+  amount: string;
+  category: string;
+  type: string;
+  date: string;
+}
+
 export async function createTransactionHandler(
-  request: FastifyRequest,
+  request: FastifyRequest<{ Body: RequestProps }>,
   reply: FastifyReply
 ) {
-  const transaction = await Transaction.findOne();
+  try {
+    const { id } = request.params as { id: number }; // Extraindo o userId da rota
+    const { type, amount, category, date, description } = request.body;
+
+    const transaction = await Transaction.create({
+      user_id: id,
+      type,
+      amount,
+      category,
+      date,
+      description,
+    });
+
+    return reply.status(201).send(transaction);
+  } catch (error) {
+    reply.status(500).send({ error: "Error creating transaction" });
+  }
 }
 
 export async function getTransactionsHandler(
