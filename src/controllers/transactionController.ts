@@ -3,7 +3,7 @@ import Transaction from "../models/transaction";
 
 interface RequestProps {
   description: string;
-  amount: string;
+  amount: number;
   category: string;
   type: string;
   date: string;
@@ -51,5 +51,55 @@ export async function getTransactionsHandler(
     return reply.send(transactions);
   } catch (error) {
     reply.status(500).send({ error: "Error fetching transactions" });
+  }
+}
+
+export async function updateTransactionHandler(
+  request: FastifyRequest<{ Body: RequestProps }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params as { id: number }; // Extraindo o userId da rota
+    const { type, amount, description, category } = request.body; // O campo a ser atualizado
+
+    const transaction = await Transaction.findByPk(id);
+    if (!transaction) {
+      return reply.status(404).send({ error: "Transaction not found" });
+    }
+
+    await transaction.update({
+      type,
+      amount,
+      description,
+      category,
+    });
+
+    // Retornar a resposta de sucesso
+    return reply
+      .status(200)
+      .send({ message: "Transaction updated successfully", transaction });
+  } catch (error) {
+    reply.status(500).send({ error: "Error update transaction" });
+  }
+}
+
+export async function deleteTransactionHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params as { id: number }; // Extraindo o userId da rota
+
+    const transaction = await Transaction.destroy({
+      where: { id },
+    });
+
+    if (!transaction) {
+      return reply.status(404).send({ error: "Transaction not found" });
+    }
+
+    return reply.send({ message: "Transaction deleted successfully" });
+  } catch (error) {
+    reply.status(500).send({ error: "Error deleting transaction" });
   }
 }
