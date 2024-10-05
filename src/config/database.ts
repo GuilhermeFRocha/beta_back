@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
 require("dotenv").config();
 import pg from "pg";
-const isProduction = process.env.NODE_ENV === "production";
 
 const sequelize = new Sequelize(
-  process.env.DATABASE || "verceldb",
+  process.env.DATABASE ||
+    "postgres://default:wKL26tCWMUOV@ep-spring-violet-a4m8pv2q-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require",
   process.env.USER || "default",
   process.env.PASSWORD,
   {
@@ -12,14 +12,9 @@ const sequelize = new Sequelize(
     dialect: "postgres",
     dialectModule: pg,
     logging: false,
-    dialectOptions: isProduction
-      ? {
-          ssl: {
-            require: true, // Neon requer SSL em produção
-            rejectUnauthorized: false, // Necessário para evitar erros de SSL
-          },
-        }
-      : {},
+    dialectOptions: {
+      ssl: true,
+    },
   }
 );
 
