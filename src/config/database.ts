@@ -1,10 +1,12 @@
 import { Sequelize } from "sequelize";
 require("dotenv").config();
+import pg from "pg";
 const isProduction = "production";
 
 const sequelize = new Sequelize("verceldb", "default", "wKL26tCWMUOV", {
   host: "ep-spring-violet-a4m8pv2q-pooler.us-east-1.aws.neon.tech",
   dialect: "postgres",
+  dialectModule: pg,
   logging: false,
   dialectOptions: isProduction
     ? {
