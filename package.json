@@ -15,7 +15,6 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.5.0",
-    "@types/pg": "^8.11.10",
     "@types/sequelize": "^4.28.20",
     "ts-node": "^10.9.2",
     "tsx": "^4.18.0",
@@ -29,7 +28,6 @@
     "fastify": "^4.28.1",
     "fastify-cors": "^6.1.0",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.3"
   }
