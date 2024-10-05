@@ -3,11 +3,11 @@ require("dotenv").config();
 const isProduction = process.env.NODE_ENV === "production";
 
 const sequelize = new Sequelize(
-  process.env.POSTGRES_DATABASE || "verceldb",
-  process.env.POSTGRES_USER || "default",
-  process.env.POSTGRES_PASSWORD,
+  process.env.DATABASE || "verceldb",
+  process.env.USER || "default",
+  process.env.PASSWORD,
   {
-    host: process.env.POSTGRES_HOST,
+    host: process.env.HOST,
     dialect: "postgres",
     logging: false,
     dialectOptions: isProduction
