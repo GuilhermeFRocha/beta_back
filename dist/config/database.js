@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 require("dotenv").config();
 const isProduction = process.env.NODE_ENV === "production";
-const sequelize = new sequelize_1.Sequelize(process.env.POSTGRES_DATABASE || "verceldb", process.env.POSTGRES_USER || "default", process.env.POSTGRES_PASSWORD, {
-    host: process.env.POSTGRES_HOST,
+const sequelize = new sequelize_1.Sequelize(process.env.DATABASE || "verceldb", process.env.USER || "default", process.env.PASSWORD, {
+    host: process.env.HOST,
     dialect: "postgres",
     logging: false,
     dialectOptions: isProduction
