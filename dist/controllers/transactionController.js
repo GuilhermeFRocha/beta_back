@@ -44,8 +44,7 @@ async function getTransactionsHandler(request, reply) {
 }
 async function updateTransactionHandler(request, reply) {
     try {
-        const { id } = request.params; // Extraindo o userId da rota
-        const { type, amount, description, category } = request.body; // O campo a ser atualizado
+        const { id, type, amount, description, category } = request.body; // O campo a ser atualizado
         const transaction = await transaction_1.default.findByPk(id);
         if (!transaction) {
             return reply.status(404).send({ error: "Transaction not found" });
@@ -57,9 +56,7 @@ async function updateTransactionHandler(request, reply) {
             category,
         });
         // Retornar a resposta de sucesso
-        return reply
-            .status(200)
-            .send({ message: "Transaction updated successfully", transaction });
+        return reply.status(200).send(transaction);
     }
     catch (error) {
         reply.status(500).send({ error: "Error update transaction" });
