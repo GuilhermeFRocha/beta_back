@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import Transaction from "../models/transaction";
 
 interface RequestProps {
+  id?: number;
   description: string;
   amount: number;
   category: string;
@@ -59,8 +60,7 @@ export async function updateTransactionHandler(
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params as { id: number }; // Extraindo o userId da rota
-    const { type, amount, description, category } = request.body; // O campo a ser atualizado
+    const { id, type, amount, description, category } = request.body; // O campo a ser atualizado
 
     const transaction = await Transaction.findByPk(id);
     if (!transaction) {
@@ -75,9 +75,7 @@ export async function updateTransactionHandler(
     });
 
     // Retornar a resposta de sucesso
-    return reply
-      .status(200)
-      .send({ message: "Transaction updated successfully", transaction });
+    return reply.status(200).send(transaction);
   } catch (error) {
     reply.status(500).send({ error: "Error update transaction" });
   }
