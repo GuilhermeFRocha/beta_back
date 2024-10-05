@@ -7,8 +7,8 @@ const sequelize_1 = require("sequelize");
 require("dotenv").config();
 const pg_1 = __importDefault(require("pg"));
 const isProduction = process.env.NODE_ENV === "production";
-const sequelize = new sequelize_1.Sequelize(process.env.DATABASE || "verceldb", process.env.USER || "default", process.env.PASSWORD, {
-    host: process.env.HOST,
+const sequelize = new sequelize_1.Sequelize(process.env.DATABASE || process.env.POSTGRES_DATABASE || "verceldb", process.env.USER || process.env.POSTGRES_USER || "default", process.env.PASSWORD || process.env.POSTGRES_PASSWORD, {
+    host: process.env.HOST || process.env.POSTGRES_HOST,
     dialect: "postgres",
     dialectModule: pg_1.default,
     logging: false,
