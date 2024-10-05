@@ -1,0 +1,13 @@
+## CREATE USERS
+POST http://localhost:3000/users
+Content-Type: application/json
+
+ {
+  "username": "examasdpleUser",
+  "password": "examasdplePass",
+  "email": "exaasdmple@example.com",
+}
+
+
+# ## GET USERS
+# GET http://localhost:3000/users
